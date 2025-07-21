@@ -23,10 +23,10 @@ public class Project {
 
     @NotEmpty
     @Pattern(regexp = "^(Not Started)|(in Progress)|(Completed)$",
-            message = "must be one of the following: (Not Started, in Progress, or Completed) only")
+            message = "status must be one of the following: (Not Started, in Progress, or Completed) only")
     private String status;
 
     @NotEmpty
-    @Size(min = 6)
+    @Size(min = 6 ,message = "companyName must not be less than 6 characters")
     private String companyName;
 }
