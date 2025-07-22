@@ -69,8 +69,61 @@ public class ProjectController {
         }
     }
 
-//• Change the project status
-//• Search for a project by given title
-//• Display All project for one company by companyName.
+    @PutMapping("/status/{iD}/{status}")
+    public ResponseEntity<?> changeProjectStatus(@PathVariable String iD, @Valid @PathVariable String status, Errors errors) {
+        if (errors.hasErrors()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.getFieldError().getDefaultMessage());
+        }
+
+        boolean statusChanged = false;
+
+        for (Project p : projects) {
+            if (p.getID().equals(iD)) {
+                p.setStatus(status);
+                statusChanged = true;
+                break;
+            }
+        }
+        if (statusChanged) {
+            return ResponseEntity.status(HttpStatus.OK).body("Status changed successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error, Project with ID " + iD + " does not exist!");
+        }
+    }
+
+    @GetMapping("/filter/by-title/{title}")
+    public ResponseEntity<?> searchProjectByTitle(@Valid@PathVariable String title, Errors errors){
+        if (errors.hasErrors()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.getFieldError().getDefaultMessage());
+        }
+
+        ArrayList<Project> foundByTitle = new ArrayList<>();
+
+        for (Project p:projects){
+            if (p.getTitle().equals(title)){
+                foundByTitle.add(p);
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(foundByTitle);
+    }
+
+
+    @GetMapping("/filter/by-company-name/{companyName}")
+    public ResponseEntity<?> searchProjectByCompanyName(@Valid@PathVariable String companyName, Errors errors){
+        if (errors.hasErrors()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.getFieldError().getDefaultMessage());
+        }
+
+        ArrayList<Project> foundByCompanyName = new ArrayList<>();
+
+        for (Project p:projects){
+            if (p.getCompanyName().equals(companyName)){
+                foundByCompanyName.add(p);
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(foundByCompanyName);
+    }
 
 }
