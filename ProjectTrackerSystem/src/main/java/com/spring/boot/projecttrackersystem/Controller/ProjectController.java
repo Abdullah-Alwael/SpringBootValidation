@@ -70,11 +70,11 @@ public class ProjectController {
     }
 
     @PutMapping("/status/{iD}/{status}")
-    public ResponseEntity<?> changeProjectStatus(@PathVariable String iD, @Valid @PathVariable String status, Errors errors) {
-        if (errors.hasErrors()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.getFieldError().getDefaultMessage());
+    public ResponseEntity<?> changeProjectStatus(@PathVariable String iD, @PathVariable String status) {
+        if (!status.matches("^(Not Started)|(in Progress)|(Completed)$")){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("status must be one of the following:" +
+                    " (Not Started, in Progress, or Completed) only");
         }
-
         boolean statusChanged = false;
 
         for (Project p : projects) {
@@ -92,10 +92,7 @@ public class ProjectController {
     }
 
     @GetMapping("/filter/by-title/{title}")
-    public ResponseEntity<?> searchProjectByTitle(@Valid@PathVariable String title, Errors errors){
-        if (errors.hasErrors()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> searchProjectByTitle(@PathVariable String title){
 
         ArrayList<Project> foundByTitle = new ArrayList<>();
 
@@ -110,10 +107,7 @@ public class ProjectController {
 
 
     @GetMapping("/filter/by-company-name/{companyName}")
-    public ResponseEntity<?> searchProjectByCompanyName(@Valid@PathVariable String companyName, Errors errors){
-        if (errors.hasErrors()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors.getFieldError().getDefaultMessage());
-        }
+    public ResponseEntity<?> searchProjectByCompanyName(@PathVariable String companyName){
 
         ArrayList<Project> foundByCompanyName = new ArrayList<>();
 
