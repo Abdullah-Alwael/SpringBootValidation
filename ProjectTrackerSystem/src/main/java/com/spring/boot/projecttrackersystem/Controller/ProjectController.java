@@ -97,7 +97,7 @@ public class ProjectController {
         ArrayList<Project> foundByTitle = new ArrayList<>();
 
         for (Project p:projects){
-            if (p.getTitle().equals(title)){
+            if (p.getTitle().contains(title)){
                 foundByTitle.add(p);
             }
         }
@@ -112,7 +112,7 @@ public class ProjectController {
         ArrayList<Project> foundByCompanyName = new ArrayList<>();
 
         for (Project p:projects){
-            if (p.getCompanyName().equals(companyName)){
+            if (p.getCompanyName().contains(companyName)){
                 foundByCompanyName.add(p);
             }
         }
