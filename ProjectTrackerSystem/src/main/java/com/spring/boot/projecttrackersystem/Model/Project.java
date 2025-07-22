@@ -14,11 +14,11 @@ public class Project {
     private String iD;
 
     @NotEmpty
-    @Size(min = 8, message = "title must not be less than 8 characters")
+    @Size(min = 9, message = "title must not be less than 9 characters")
     private String title;
 
     @NotEmpty
-    @Size(min = 15, message = "description must not be less than 15 characters")
+    @Size(min = 16, message = "description must not be less than 16 characters")
     private String description ;
 
     @NotEmpty
@@ -27,6 +27,6 @@ public class Project {
     private String status;
 
     @NotEmpty
-    @Size(min = 6 ,message = "companyName must not be less than 6 characters")
+    @Size(min = 7 ,message = "companyName must not be less than 7 characters")
     private String companyName;
 }
